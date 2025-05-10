@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -114,6 +114,15 @@ namespace mergevehiclesfivem
                 {
                     string fileName = Path.GetFileName(file);
                     string extension = Path.GetExtension(file).ToLower();
+                    
+                    // Ignorar arquivos de manifesto fxmanifest.lua e _resource.lua
+                    if (fileName.Equals("fxmanifest.lua", StringComparison.OrdinalIgnoreCase) || 
+                        fileName.Equals("_resource.lua", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Não copiar os arquivos de manifesto para a pasta stream
+                        continue;
+                    }
+                    
                     if (extension == ".meta")
                     {
                         File.Copy(file, Path.Combine(vehicleDataFolder, fileName), true);
@@ -133,8 +142,14 @@ namespace mergevehiclesfivem
             foreach (var file in Directory.GetFiles(currentDir))
             {
                 string fileName = Path.GetFileName(file);
-                string extension = Path.GetExtension(file).ToLower();
-
+                
+                // Ignorar arquivos de manifesto na pasta stream também
+                if (fileName.Equals("fxmanifest.lua", StringComparison.OrdinalIgnoreCase) || 
+                    fileName.Equals("_resource.lua", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                
                 File.Copy(file, Path.Combine(vehicleStreamFolder, fileName), true);
             }
 
@@ -149,8 +164,14 @@ namespace mergevehiclesfivem
             foreach (var file in Directory.GetFiles(currentDir))
             {
                 string fileName = Path.GetFileName(file);
-                string extension = Path.GetExtension(file).ToLower();
-
+                
+                // Ignorar arquivos de manifesto na pasta meta também
+                if (fileName.Equals("fxmanifest.lua", StringComparison.OrdinalIgnoreCase) || 
+                    fileName.Equals("_resource.lua", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                
                 File.Copy(file, Path.Combine(vehicleMetaFolder, fileName), true);
             }
 
